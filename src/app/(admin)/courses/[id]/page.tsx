@@ -1,3 +1,4 @@
+"use server"
 import { fetchAPI } from "@/lib/api"
 import { APICourse } from "@/features/admin/courses/types"
 import { Separator } from "@/components/ui/separator"

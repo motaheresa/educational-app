@@ -8,7 +8,6 @@ interface ApiResponse<T> {
 
 export async function fetchAPI<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${BASE_URL}${endpoint}`;
-    console.log("url",url);
     
 
     const defaultHeaders = {
