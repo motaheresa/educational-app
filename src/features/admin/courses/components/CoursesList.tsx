@@ -11,6 +11,7 @@ import { UICourse } from "@/features/admin/courses/types"
 import { ConfirmModal } from "@/components/modals/ConfirmModal"
 import { deleteCourseAction } from "@/features/admin/courses/actions"
 import { toast } from "sonner"
+import { ColumnDef } from "@tanstack/react-table"
 
 interface CoursesListProps {
     data: UICourse[]
