@@ -9,15 +9,17 @@ import { BookOpen, Clock, FileText, MonitorPlay, Users } from "lucide-react"
 
 export default async function CourseModal({ params }: { params: { id: string } }) {
     const { id } = await params
+
+    // Ignore "create" ID to prevent collision
+    if (id === 'create') return null;
+
     let course: APICourse | null = null;
     let errorMsg = "";
-
     try {
-        console.log("id",id);
-        
+        console.log("id", id);
         course = await fetchAPI<APICourse>(`/api/courses/${id}`);
-   
-        
+
+
     } catch (error: any) {
         console.error("Failed to fetch course details:", error);
         errorMsg = error.message || "Failed to load course";

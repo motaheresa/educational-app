@@ -1,5 +1,6 @@
 "use client"
 import { BookOpen, Users, TvMinimalPlay } from "lucide-react" // Re-added deleted imports
+import { useRouter } from "next/navigation"
 
 import { DataTable } from "@/components/molecules/Table"
 import { StatusBadge } from "@/components/atoms/StatusBadge"
@@ -82,14 +83,18 @@ export function CoursesList({ data }: CoursesListProps) {
         {
             id: "actions",
             header: "إجراءات",
-            cell: ({ row }) => (
-                <div onClick={(e) => e.stopPropagation()}>
-                    <ActionButtons
-                        onEdit={() => console.log("Edit", row.original.id)}
-                        onDelete={() => setDeleteId(row.original.id)}
-                    />
-                </div>
-            ),
+            cell: ({ row }) => {
+                const router = useRouter()
+                return (
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <ActionButtons
+                            onView={() => router.push(`/courses/${row.original.id}`)}
+                            onEdit={() => router.push(`/courses/${row.original.id}/edit`)}
+                            onDelete={() => setDeleteId(row.original.id)}
+                        />
+                    </div>
+                )
+            },
         },
     ]
 

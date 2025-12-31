@@ -14,7 +14,14 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 
-export function CoursePublishSettings() {
+interface CoursePublishSettingsProps {
+    price: number
+    grade: string
+    subject: string
+    onChange: (field: keyof import("@/features/admin/courses/types/create").CreateCourseFormData, value: any) => void
+}
+
+export function CoursePublishSettings({ price, grade, subject, onChange }: CoursePublishSettingsProps) {
     const [isPublished, setIsPublished] = React.useState(false)
 
     return (
@@ -25,33 +32,40 @@ export function CoursePublishSettings() {
             <CardContent className="space-y-6">
                 <div className="space-y-2">
                     <Label>سعر الكورس (ج.م)</Label>
-                    <Input type="number" placeholder="0" className="text-left" dir="ltr" />
+                    <Input
+                        type="number"
+                        placeholder="0"
+                        className="text-left"
+                        dir="ltr"
+                        value={price}
+                        onChange={(e) => onChange("price", Number(e.target.value))}
+                    />
                 </div>
 
                 <div className="space-y-2">
                     <Label>الصف الدراسي</Label>
-                    <Select>
+                    <Select onValueChange={(value) => onChange("grade", value)} value={grade}>
                         <SelectTrigger className="w-full text-right" dir="rtl">
                             <SelectValue placeholder="اختر الصف..." />
                         </SelectTrigger>
                         <SelectContent dir="rtl">
-                            <SelectItem value="1">الصف الأول الثانوي</SelectItem>
-                            <SelectItem value="2">الصف الثاني الثانوي</SelectItem>
-                            <SelectItem value="3">الصف الثالث الثانوي</SelectItem>
+                            <SelectItem value="Grade 10">الصف الأول الثانوي</SelectItem>
+                            <SelectItem value="Grade 11">الصف الثاني الثانوي</SelectItem>
+                            <SelectItem value="Grade 12">الصف الثالث الثانوي</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
                 <div className="space-y-2">
                     <Label>المادة</Label>
-                    <Select>
+                    <Select onValueChange={(value) => onChange("subject", value)} value={subject}>
                         <SelectTrigger className="w-full text-right" dir="rtl">
                             <SelectValue placeholder="اختر المادة..." />
                         </SelectTrigger>
                         <SelectContent dir="rtl">
-                            <SelectItem value="physics">الفيزياء</SelectItem>
-                            <SelectItem value="math">الرياضيات</SelectItem>
-                            <SelectItem value="chemistry">الكيمياء</SelectItem>
+                            <SelectItem value="Physics">الفيزياء</SelectItem>
+                            <SelectItem value="Math">الرياضيات</SelectItem>
+                            <SelectItem value="Chemistry">الكيمياء</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
