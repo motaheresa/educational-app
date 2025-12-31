@@ -1,10 +1,7 @@
-import * as React from "react"
-
-import { PageHeader } from "@/features/admin/components/molecules/PageHeader"
-import CoursesTeacherPageHeader from "@/features/admin/courses/components/TableHeader"
+import CoursesTeacherPageHeader from "@/features/admin/courses/components/organisms/TableHeader"
 import { fetchAPI } from "@/lib/api"
 import { APICourse, UICourse } from "@/features/admin/courses/types"
-import { CoursesList } from "@/features/admin/courses/components/CoursesList"
+import { CoursesList } from "@/features/admin/courses/components/organisms/CoursesList"
 
 export default async function CoursesPage() {
     let courses: UICourse[] = [];

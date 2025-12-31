@@ -9,7 +9,6 @@ export default async function CourseDetailPage({ params }: { params: { id: strin
     const { id } = await params
     let course: APICourse | null = null;
     let errorMsg = "";
-console.log("id",params,id);
     try {
         course = await fetchAPI<APICourse>(`/api/courses/${id}`);
     } catch (error: any) {

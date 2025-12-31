@@ -4,10 +4,10 @@ import { ArrowLeft, Save, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { PageHeader } from "@/features/admin/components/molecules/PageHeader"
 
-import { CourseDetailsCard } from "@/features/admin/courses/components/CourseDetailsCard"
-import { CourseCurriculum } from "@/features/admin/courses/components/CourseCurriculum"
-import { CourseImageUpload } from "@/features/admin/courses/components/CourseImageUpload"
-import { CoursePublishSettings } from "@/features/admin/courses/components/CoursePublishSettings"
+import { CourseDetailsCard } from "@/features/admin/courses/components/molecules/CourseDetailsCard"
+import { CourseCurriculum } from "@/features/admin/courses/components/organisms/CourseCurriculum"
+import { CourseImageUpload } from "@/features/admin/courses/components/molecules/CourseImageUpload"
+import { CoursePublishSettings } from "@/features/admin/courses/components/organisms/CoursePublishSettings"
 
 export default function AddCoursePage() {
     return (

@@ -1,6 +1,4 @@
 "use client"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { BookOpen, Users, TvMinimalPlay } from "lucide-react" // Re-added deleted imports
 
 import { DataTable } from "@/components/molecules/Table"
@@ -12,46 +10,22 @@ import { ConfirmModal } from "@/components/modals/ConfirmModal"
 import { deleteCourseAction } from "@/features/admin/courses/actions"
 import { toast } from "sonner"
 import { ColumnDef } from "@tanstack/react-table"
+import { useCoursesList } from "@/features/admin/courses/hooks/useCoursesList"
 
 interface CoursesListProps {
     data: UICourse[]
 }
 
 export function CoursesList({ data }: CoursesListProps) {
-    const router = useRouter()
-    const [deleteId, setDeleteId] = useState<string | null>(null)
-    const [isDeleting, setIsDeleting] = useState(false)
+    const {
+        deleteId,
+        setDeleteId,
+        isDeleting,
+        handleDelete,
+        onRowClick
+    } = useCoursesList()
 
-    const handleDelete = async () => {
-        if (!deleteId) return
-
-        setIsDeleting(true)
-
-        toast.promise(deleteCourseAction(deleteId), {
-            loading: 'جاري حذف الكورس...',
-            success: (data) => {
-                console.log("From Success",data);
-                
-                if (data.success) {
-                    setDeleteId(null)
-                    return 'تم حذف الكورس بنجاح'
-                } else {
-                    throw new Error(data.error)
-                }
-            },
-            error: (err) => {
-                console.log("From err",err);
-                return err.message || 'حدث خطأ أثناء حذف الكورس'
-            },
-            finally: () => setIsDeleting(false)
-        })
-    }
-
-    // Moved columns outside or keep inside using useMemo if dependencies needed. 
-    // Since columns need access to handle actions, it's often easier to define them inside 
-    // OR pass handlers to a column creation function.
-    // For simplicity, I'll reconstruct columns here to access `setDeleteId`.
-
+    // Reconstruct columns to access setDeleteId
     const columns: ColumnDef<UICourse>[] = [
         {
             accessorKey: "name",
@@ -118,8 +92,6 @@ export function CoursesList({ data }: CoursesListProps) {
             ),
         },
     ]
-    console.log(deleteId);
-    
 
     return (
         <div className="bg-card rounded-xl border shadow-sm p-6">
@@ -130,7 +102,7 @@ export function CoursesList({ data }: CoursesListProps) {
                 searchPlaceholder="بحث باسم الكورس..."
                 totalCount={data.length}
                 pageSize={10}
-                onRowClick={(row) => router.push(`/courses/${row.id}`)}
+                onRowClick={(row) => onRowClick(row.id)}
                 DataTableHeader={<div className="flex items-center justify-between mb-6">
                     <div>
                         <h2 className="text-xl font-sem text-foreground">الكورسات المتاحة</h2>
