@@ -1,5 +1,6 @@
-import { LoadingState } from "@/components/feedback/LoadingState"
+
+import { LoadingState } from "@/components/feedback/LoadingState";
 
 export default function CoursesLoading() {
-    return <LoadingState message="جاري تحميل الكورسات..." />
+    return <LoadingState message="جاري تحميل الكورسات..." />;
 }

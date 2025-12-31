@@ -2,6 +2,8 @@ import CoursesTeacherPageHeader from "@/features/admin/courses/components/organi
 import { fetchAPI } from "@/lib/api"
 import { APICourse, UICourse } from "@/features/admin/courses/types"
 import { CoursesList } from "@/features/admin/courses/components/organisms/CoursesList"
+import { Suspense } from "react";
+import { LoadingState } from "@/components/feedback/LoadingState";
 
 export default async function CoursesPage() {
     let courses: UICourse[] = [];
@@ -42,7 +44,9 @@ export default async function CoursesPage() {
             <CoursesTeacherPageHeader />
 
             {/* Courses Section */}
-            <CoursesList data={courses} />
+            <Suspense fallback={<LoadingState message="جاري تحميل الكورسات..." />}>
+                <CoursesList data={courses} />
+            </Suspense>
         </div>
     )
 }
