@@ -24,6 +24,7 @@ export const AvantGarde = localFont({
 
 
 import { ThemeProvider } from "@/providers/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "Teacher Panel",
@@ -47,6 +48,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

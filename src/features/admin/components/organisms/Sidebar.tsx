@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { ModeToggle } from "@/components/molecules/mode-toggle"
 
 const navItems = [
     {
@@ -106,7 +107,7 @@ export function Sidebar({ className, onClose }: { className?: string; onClose?: 
             </nav>
 
             {/* New Student Widget */}
-            <div className="px-3 mt-auto">
+            <div className="px-3 mt-auto space-y-4">
                 <div className="bg-sidebar-accent/50 rounded-xl p-4 text-center">
                     <div className="flex justify-center mb-3">
                         <div className="size-10 bg-card rounded-full flex items-center justify-center shadow-sm">
@@ -120,6 +121,12 @@ export function Sidebar({ className, onClose }: { className?: string; onClose?: 
                     <Button className="w-full bg-secondary hover:bg-secondary/90 text-white shadow-lg shadow-secondary/20">
                         إضافة الآن
                     </Button>
+                </div>
+
+                {/* Mobile Dark Mode Toggle */}
+                <div className="md:hidden flex items-center justify-between px-4 py-2 bg-sidebar-accent/30 rounded-lg">
+                    <span className="text-sm font-medium text-muted-foreground">الوضع الليلي</span>
+                    <ModeToggle />
                 </div>
             </div>
         </div>

@@ -45,6 +45,7 @@ interface DataTableProps<TData, TValue> {
     filterLabel?: string
     className?: string
     DataTableHeader?: React.ReactNode
+    onRowClick?: (row: TData) => void
 }
 
 export function DataTable<TData, TValue>({
@@ -59,6 +60,7 @@ export function DataTable<TData, TValue>({
     filterLabel = "جميع التصنيفات",
     className,
     DataTableHeader,
+    onRowClick,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -115,10 +117,10 @@ export function DataTable<TData, TValue>({
                     )}
 
                     {showSearch && (
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button variant="outline" className="gap-2 text-muted-foreground">
+                                    <Button variant="outline" className="gap-2 text-muted-foreground w-full sm:w-auto mt-2 sm:mt-0">
                                         <SlidersHorizontal className="size-4" />
                                         {filterLabel}
                                         <ChevronDown className="size-4" />
@@ -173,8 +175,8 @@ export function DataTable<TData, TValue>({
             </div>
 
 
-            {/* Table */}
-            <div className="overflow-x-auto rounded-lg border bg-card">
+            {/* Table (Desktop View) */}
+            <div className="hidden md:block overflow-hidden rounded-lg border bg-card">
                 <Table>
                     <TableHeader>
 
@@ -199,7 +201,8 @@ export function DataTable<TData, TValue>({
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
-                                    className="hover:bg-muted/20"
+                                    className={cn("hover:bg-muted/20", onRowClick && "cursor-pointer")}
+                                    onClick={() => onRowClick && onRowClick(row.original)}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id} className="text-right">
@@ -217,12 +220,42 @@ export function DataTable<TData, TValue>({
                                     colSpan={columns.length}
                                     className="h-24 text-center"
                                 >
-                                    لا توجد كورسات.
+                                    لا توجد بيانات.
                                 </TableCell>
                             </TableRow>
                         )}
                     </TableBody>
                 </Table>
+            </div>
+
+            {/* Cards (Mobile View) */}
+            <div className="md:hidden space-y-4">
+                {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                        <div key={row.id} className="bg-card border rounded-xl p-4 shadow-sm space-y-3">
+                            {row.getVisibleCells().map((cell) => {
+                                // Try to find the matching header to attempt to render it correctly
+                                const header = table.getFlatHeaders().find(h => h.column.id === cell.column.id);
+                                return (
+                                    <div key={cell.id} className="flex justify-between items-center py-2 border-b last:border-0 border-muted/50">
+                                        <span className="text-muted-foreground text-sm font-medium">
+                                            {header && !header.isPlaceholder
+                                                ? flexRender(header.column.columnDef.header, header.getContext())
+                                                : cell.column.id}
+                                        </span>
+                                        <div className="text-right font-medium text-sm">
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ))
+                ) : (
+                    <div className="bg-card border rounded-xl p-8 text-center text-muted-foreground">
+                        لا توجد بيانات.
+                    </div>
+                )}
             </div>
 
             {/* Pagination */}
