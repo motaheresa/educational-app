@@ -15,7 +15,7 @@ function getChangedFields(initial: UpdateCourseFormData, current: UpdateCourseFo
     if (initial.subject !== current.subject) changes.subject = current.subject
     if (initial.banner !== current.banner) changes.banner = current.banner
 
-    // Deep compare sections
+    // Deep compare sections 🔌
     if (JSON.stringify(initial.sections) !== JSON.stringify(current.sections)) {
         changes.sections = current.sections
     }

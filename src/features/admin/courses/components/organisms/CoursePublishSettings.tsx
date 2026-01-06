@@ -37,35 +37,35 @@ export function CoursePublishSettings({ price, grade, subject, onChange }: Cours
                         placeholder="0"
                         className="text-left"
                         dir="ltr"
-                        value={price}
+                        defaultValue={price||""}
                         onChange={(e) => onChange("price", Number(e.target.value))}
                     />
                 </div>
 
                 <div className="space-y-2">
                     <Label>الصف الدراسي</Label>
-                    <Select onValueChange={(value) => onChange("grade", value)} value={grade}>
-                        <SelectTrigger className="w-full text-right" dir="rtl">
+                    <Select dir="rtl" onValueChange={(value) => onChange("grade", value)} value={grade}>
+                        <SelectTrigger>
                             <SelectValue placeholder="اختر الصف..." />
                         </SelectTrigger>
-                        <SelectContent dir="rtl">
-                            <SelectItem value="Grade 10">الصف الأول الثانوي</SelectItem>
-                            <SelectItem value="Grade 11">الصف الثاني الثانوي</SelectItem>
-                            <SelectItem value="Grade 12">الصف الثالث الثانوي</SelectItem>
+                        <SelectContent >
+                            <SelectItem value="الصف الأول الثانوي">الصف الأول الثانوي</SelectItem>
+                            <SelectItem value="الصف الثاني الثانوي">الصف الثاني الثانوي</SelectItem>
+                            <SelectItem value="الصف الثالث الثانوي">الصف الثالث الثانوي</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
                 <div className="space-y-2">
                     <Label>المادة</Label>
-                    <Select onValueChange={(value) => onChange("subject", value)} value={subject}>
-                        <SelectTrigger className="w-full text-right" dir="rtl">
+                    <Select dir="rtl" onValueChange={(value) => onChange("subject", value)} value={subject}>
+                        <SelectTrigger  >
                             <SelectValue placeholder="اختر المادة..." />
                         </SelectTrigger>
-                        <SelectContent dir="rtl">
-                            <SelectItem value="Physics">الفيزياء</SelectItem>
-                            <SelectItem value="Math">الرياضيات</SelectItem>
-                            <SelectItem value="Chemistry">الكيمياء</SelectItem>
+                        <SelectContent >
+                            <SelectItem value="الفيزياء">الفيزياء</SelectItem>
+                            <SelectItem value="الرياضيات">الرياضيات</SelectItem>
+                            <SelectItem value="الكيمياء">الكيمياء</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

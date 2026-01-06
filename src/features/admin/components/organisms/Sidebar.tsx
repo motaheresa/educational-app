@@ -31,8 +31,8 @@ const navItems = [
         icon: FileText,
     },
     {
-        title: "الكويزات",
-        href: "/quizzes",
+        title: "الواجبات",
+        href: "/homeworks",
         icon: HelpCircle,
     },
     {
@@ -118,8 +118,8 @@ export function Sidebar({ className, onClose }: { className?: string; onClose?: 
                     <p className="text-xs text-muted-foreground mb-3">
                         إضافة طالب جديد إلى المنصة بسرعة
                     </p>
-                    <Button className="w-full bg-secondary hover:bg-secondary/90 text-white shadow-lg shadow-secondary/20">
-                        إضافة الآن
+                    <Button className="w-full bg-secondary hover:bg-secondary/90 text-white shadow-lg shadow-secondary/20" asChild>
+                        <Link href="/students/create">إضافة الآن</Link>
                     </Button>
                 </div>
 

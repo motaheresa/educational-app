@@ -7,12 +7,11 @@ import { ArrowRight, Edit, BookOpen, FileText, Video, DollarSign, GraduationCap,
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
+import { ErrorState } from "@/components/feedback/ErrorState"
+import Image from "next/image"
 
 export default async function ViewCoursePage({ params }: { params: { id: string } }) {
     const { id } = await params
-
-    // Ignore "create" ID to prevent collision
-    if (id === 'create') return null;
 
     let course: APICourse | null = null
     let errorMsg = "";
@@ -21,22 +20,7 @@ export default async function ViewCoursePage({ params }: { params: { id: string 
         course = await fetchAPI<APICourse>(`/api/courses/${id}`)
     } catch (error: any) {
         errorMsg = error.message
-    }
-
-    if (errorMsg || !course) {
-        return (
-            <div className="container p-6">
-                <div className="text-center p-6 text-destructive border rounded-xl">
-                    <p>خطأ في تحميل بيانات الكورس</p>
-                    <p className="text-sm opacity-80">{errorMsg}</p>
-                    <div className="mt-4">
-                        <Link href="/courses">
-                            <Button variant="outline">العودة للكورسات</Button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        )
+        return <ErrorState message={error.message||"خطأ في تحميل بيانات الكورس"} />
     }
 
     // Calculations

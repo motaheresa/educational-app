@@ -3,6 +3,7 @@ import { fetchAPI } from "@/lib/api"
 import { APICourse } from "@/features/admin/courses/types/index"
 import { UpdateCourseFormData } from "@/features/admin/courses/types/update"
 import { notFound } from "next/navigation"
+import { ErrorState } from "@/components/feedback/ErrorState"
 
 export default async function UpdateCoursePage({ params }: { params: { id: string } }) {
     const { id } = await params
@@ -13,11 +14,11 @@ export default async function UpdateCoursePage({ params }: { params: { id: strin
         course = await fetchAPI<APICourse>(`/api/courses/${id}`)
     } catch (error) {
         console.error("Failed to fetch course:", error)
-        notFound()
+        return <ErrorState message="حدث خطأ أثناء جلب بيانات الكورس" />
     }
 
     if (!course) {
-        notFound()
+        return <ErrorState message="الكورس غير موجود" />
     }
 
     // Map API data to form data

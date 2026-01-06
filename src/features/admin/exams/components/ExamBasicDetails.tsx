@@ -39,14 +39,14 @@ export function ExamBasicDetails() {
                     {/* Course Select */}
                     <div className="space-y-2">
                         <Label>اختيار الكورس <span className="text-destructive">*</span></Label>
-                        <Select>
-                            <SelectTrigger className="w-full text-right" dir="rtl">
+                        <Select dir="rtl">
+                            <SelectTrigger >
                                 <div className="flex items-center gap-2">
                                     <SelectValue placeholder="اختر الكورس التابع للامتحان..." />
                                     <GraduationCap className="h-4 w-4 text-muted-foreground ml-auto" />
                                 </div>
                             </SelectTrigger>
-                            <SelectContent dir="rtl">
+                            <SelectContent>
                                 <SelectItem value="math">الرياضيات المتقدمة</SelectItem>
                                 <SelectItem value="physics">الفيزياء الحديثة</SelectItem>
                                 <SelectItem value="chemistry">الكيمياء العضوية</SelectItem>

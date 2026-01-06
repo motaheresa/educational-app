@@ -38,13 +38,13 @@ export function ConfirmModal({
     return (
         <AlertDialog open={isOpen} onOpenChange={onClose}>
             <AlertDialogContent>
-                <AlertDialogHeader className="text-right">
-                    <AlertDialogTitle>{title}</AlertDialogTitle>
-                    <AlertDialogDescription>
+                <AlertDialogHeader >
+                    <AlertDialogTitle className="text-right">{title}</AlertDialogTitle>
+                    <AlertDialogDescription className="text-right">
                         {description}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter className="flex-row-reverse sm:flex-row-reverse gap-2">
+                <AlertDialogFooter className="flex-row-reverse text-right sm:flex-row-reverse gap-2">
                     <AlertDialogCancel disabled={isLoading} className="mt-0">
                         {cancelText}
                     </AlertDialogCancel>

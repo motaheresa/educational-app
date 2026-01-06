@@ -4,6 +4,7 @@ import { APICourse, UICourse } from "@/features/admin/courses/types"
 import { CoursesList } from "@/features/admin/courses/components/organisms/CoursesList"
 import { Suspense } from "react";
 import { LoadingState } from "@/components/feedback/LoadingState";
+import { ErrorState } from "@/components/feedback/ErrorState";
 
 export default async function CoursesPage() {
     let courses: UICourse[] = [];
@@ -35,6 +36,7 @@ export default async function CoursesPage() {
 
     } catch (error) {
         console.error("Failed to fetch courses:", error);
+        return <ErrorState message={"خطأ في تحميل بيانات الكورس"} />
         // Handle error state or return empty
     }
 

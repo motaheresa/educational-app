@@ -35,7 +35,6 @@ export async function fetchAPI<T>(endpoint: string, options: RequestInit = {}): 
         const json: ApiResponse<T> = await response.json();
         console.log(json);
 
-        json.success=true
         if (!json.success && json.success !== undefined) {
             // Some APIs might not return success field, checking if defined
             throw new Error(json.message || "Unknown API Error");
