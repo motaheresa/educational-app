@@ -58,10 +58,7 @@ const mockStudents: UIStudent[] = [
 
 const StudentsPage = () => {
     return (
-        <div className="flex flex-col gap-6">
-            <StudentsHeader />
-            <StudentsList data={mockStudents} />
-        </div>
+        <StudentsList data={mockStudents} />
     )
 }
 

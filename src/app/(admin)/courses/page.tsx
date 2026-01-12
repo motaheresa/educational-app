@@ -1,4 +1,4 @@
-import CoursesTeacherPageHeader from "@/features/admin/courses/components/organisms/TableHeader"
+
 import { fetchAPI } from "@/lib/api"
 import { APICourse, UICourse } from "@/features/admin/courses/types"
 import { CoursesList } from "@/features/admin/courses/components/organisms/CoursesList"
@@ -42,8 +42,7 @@ export default async function CoursesPage() {
 
     return (
         <div>
-            {/* Page Header */}
-            <CoursesTeacherPageHeader />
+
 
             {/* Courses Section */}
             <Suspense fallback={<LoadingState message="جاري تحميل الكورسات..." />}>

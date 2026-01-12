@@ -19,7 +19,7 @@ import { StatusBadge, type StatusVariant } from "@/components/atoms/StatusBadge"
 import { ActionButtons } from "@/components/atoms/ActionButtons"
 import { cn } from "@/lib/utils"
 // Use the new header component
-import ExamsPageHeader from "@/features/admin/exams/components/TableHeader"
+
 import { Progress } from "@/components/ui/progress"
 
 // Exam data type
@@ -176,29 +176,24 @@ const columns: ColumnDef<Exam>[] = [
 
 export default function ExamsPage() {
     return (
-        <div>
-            {/* Page Header */}
-            <ExamsPageHeader />
-
+        <>
             {/* Exams Section */}
-            <div className="bg-card rounded-xl border shadow-sm p-6">
-                <DataTable
-                    columns={columns}
-                    data={examsData}
-                    searchKey="name"
-                    searchPlaceholder="بحث باسم الامتحان..."
-                    totalCount={examsData.length}
-                    pageSize={10}
-                    DataTableHeader={
-                        <div className="flex items-center justify-between mb-6">
-                            <div>
-                                <h2 className="text-xl font-sem text-foreground">الامتحانات المنشأة</h2>
-                                <p className="text-sm text-muted-foreground mt-1">عدد الامتحانات: {examsData.length} امتحان</p>
-                            </div>
+            <DataTable
+                columns={columns}
+                data={examsData}
+                searchKey="name"
+                searchPlaceholder="بحث باسم الامتحان..."
+                totalCount={examsData.length}
+                pageSize={10}
+                DataTableHeader={
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 className="text-xl font-sem text-foreground">الامتحانات المنشأة</h2>
+                            <p className="text-sm text-muted-foreground mt-1">عدد الامتحانات: {examsData.length} امتحان</p>
                         </div>
-                    }
-                />
-            </div>
-        </div>
+                    </div>
+                }
+            />
+        </>
     )
 }

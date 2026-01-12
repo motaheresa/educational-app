@@ -1,7 +1,7 @@
 import React from 'react'
-import { CoursesHeader } from '@/features/admin/courses/components/organisms/CoursesHeader'
+import { ExamsHeader } from '@/features/admin/exams/components/organisms/ExamsHeader'
 
-export default function CoursesLayout({
+export default function ExamsLayout({
     children,
     modal
 }: {
@@ -10,7 +10,7 @@ export default function CoursesLayout({
 }) {
     return (
         <div className="flex flex-col gap-6">
-            <CoursesHeader />
+            <ExamsHeader />
             <div className="bg-card rounded-xl border shadow-sm p-6">
                 {children}
             </div>

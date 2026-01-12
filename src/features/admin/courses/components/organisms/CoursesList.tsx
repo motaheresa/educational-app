@@ -99,7 +99,7 @@ export function CoursesList({ data }: CoursesListProps) {
     ]
 
     return (
-        <div className="bg-card rounded-xl border shadow-sm p-6">
+        <>
             <DataTable
                 columns={columns}
                 data={data}
@@ -126,6 +126,6 @@ export function CoursesList({ data }: CoursesListProps) {
                 variant="destructive"
                 isLoading={isDeleting}
             />
-        </div>
+        </>
     )
 }

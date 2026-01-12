@@ -90,10 +90,6 @@ export function DataTable<TData, TValue>({
             rowSelection,
         },
     })
-
-
-
-    console.log("table.getState().pagination", table.getState().pagination)
     return (
         <div className={cn("w-full", className)}>
             {/* Search and Filter Bar */}

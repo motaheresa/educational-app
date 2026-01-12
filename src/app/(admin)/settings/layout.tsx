@@ -1,5 +1,5 @@
 import { SettingsSidebar, settingsNavItems } from "@/features/admin/settings/components/SettingsSidebar"
-import { PageHeader } from "@/features/admin/components/molecules/PageHeader"
+import { PageHeader } from "@/features/admin/components/molecules/PageTitle"
 
 export default function SettingsLayout({
     children,

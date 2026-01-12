@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Save, X, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { PageHeader } from "@/features/admin/components/molecules/PageHeader"
+import { PageHeader } from "@/features/admin/components/molecules/PageTitle"
 
 interface UpdateCourseHeaderProps {
     isSubmitting: boolean
