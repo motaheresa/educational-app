@@ -36,7 +36,7 @@ export function StudentsList({ data }: StudentsListProps) {
                 return (
                     <div className="flex items-center gap-3">
                         <Avatar className="size-10 border">
-                            <AvatarImage src={student.avatar} alt={student.name} />
+                            <AvatarImage src={student.image} alt={student.name} />
                             <AvatarFallback>{student.name[0]}</AvatarFallback>
                         </Avatar>
                         <div className="text-right">
@@ -58,11 +58,11 @@ export function StudentsList({ data }: StudentsListProps) {
             ),
         },
         {
-            accessorKey: "enrolledCourses",
+            accessorKey: "courses",
             header: "الكورسات المشترك بها",
             cell: ({ row }) => (
                 <div className="flex flex-wrap gap-1 max-w-[200px]">
-                    {row.original.enrolledCourses.map((course, index) => (
+                    {row.original.courses.map((course, index) => (
                         <Badge key={index} variant="secondary" className="bg-primary/5 text-primary hover:bg-primary/10 border-none px-2 py-0 h-6 text-[10px]">
                             {course}
                         </Badge>
@@ -71,23 +71,33 @@ export function StudentsList({ data }: StudentsListProps) {
             ),
         },
         {
-            accessorKey: "registrationDate",
+            accessorKey: "createdAt",
             header: "تاريخ التسجيل",
-            cell: ({ row }) => (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                    <Calendar className="size-4" />
-                    <span className="text-xs">{row.original.registrationDate}</span>
-                </div>
-            ),
+            cell: ({ row }) => {
+                const date = new Date(row.original.createdAt).toLocaleDateString("ar-EG", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                })
+                return (
+                    <div className="flex items-center gap-1.5 text-muted-foreground">
+                        <Calendar className="size-4" />
+                        <span className="text-xs">{date}</span>
+                    </div>
+                )
+            },
         },
         {
             accessorKey: "status",
             header: "الحالة",
             cell: ({ row }) => {
-                const status = row.original.status as any;
+                const rawStatus = row.original.status as string;
+                // Normalize status to lowercase for UI mapping
+                const status = rawStatus.toLowerCase();
+
                 let variant: "active" | "inactive" | "soon" = "active";
                 if (status === "blocked") variant = "inactive";
-                if (status === "inactive") variant = "soon"; // Mapping for visual representation
+                if (status === "inactive") variant = "soon";
 
                 return <StatusBadge status={variant} className={cn(status === "blocked" && "bg-red-100 text-red-700")} />
             },
@@ -100,6 +110,7 @@ export function StudentsList({ data }: StudentsListProps) {
                 return (
                     <div onClick={(e) => e.stopPropagation()}>
                         <ActionButtons
+                            onView={() => router.push(`/students/${row.original.id}`)}
                             onEdit={() => router.push(`/students/${row.original.id}/edit`)}
                             onDelete={() => setDeleteId(row.original.id)}
                         />
