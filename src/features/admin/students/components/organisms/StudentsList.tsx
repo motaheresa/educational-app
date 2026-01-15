@@ -7,7 +7,7 @@ import { DataTable } from "@/components/molecules/Table"
 import { StatusBadge } from "@/components/atoms/StatusBadge"
 import { ActionButtons } from "@/components/atoms/ActionButtons"
 import { cn } from "@/lib/utils"
-import { UIStudent } from "@/features/admin/students/types"
+import { APIStudent } from "@/features/admin/students/types"
 import { ConfirmModal } from "@/components/modals/ConfirmModal"
 import { useStudentsList } from "@/features/admin/students/hooks/useStudentsList"
 import { ColumnDef } from "@tanstack/react-table"
@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 
 interface StudentsListProps {
-    data: UIStudent[]
+    data: APIStudent[]
 }
 
 export function StudentsList({ data }: StudentsListProps) {
@@ -27,7 +27,7 @@ export function StudentsList({ data }: StudentsListProps) {
         onRowClick
     } = useStudentsList()
 
-    const columns: ColumnDef<UIStudent>[] = [
+    const columns: ColumnDef<APIStudent>[] = [
         {
             accessorKey: "name",
             header: "الطالب",

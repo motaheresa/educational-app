@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { deleteStudentAction } from "../actions"
 
 export function useStudentsList() {
     const router = useRouter()
@@ -14,16 +15,22 @@ export function useStudentsList() {
 
         setIsDeleting(true)
 
-        // Mock delete action for now
-        toast.promise(new Promise((resolve) => setTimeout(() => resolve({ success: true }), 1000)), {
-            loading: 'جاري حذف الطالب...',
-            success: () => {
+        try {
+            const result = await deleteStudentAction(deleteId)
+
+            if (result.success) {
+                toast.success("تم حذف الطالب بنجاح")
                 setDeleteId(null)
-                return 'تم حذف الطالب بنجاح'
-            },
-            error: 'حدث خطأ أثناء حذف الطالب',
-            finally: () => setIsDeleting(false)
-        })
+                router.refresh()
+            } else {
+                toast.error(result.error || "حدث خطأ أثناء حذف الطالب")
+            }
+        } catch (error) {
+            console.error("Failed to delete student:", error)
+            toast.error("حدث خطأ أثناء حذف الطالب")
+        } finally {
+            setIsDeleting(false)
+        }
     }
 
     const onRowClick = (id: string) => {

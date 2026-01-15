@@ -1,19 +1,22 @@
-"use client"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { createStudentAction } from "../actions"
+import { CreateStudentRequest } from "../types"
 
 export function useCreateStudent() {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
+
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
         email: "",
+        parentPhone: "",
         enrolledCourses: [] as string[],
         notes: ""
     })
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -28,16 +31,30 @@ export function useCreateStudent() {
         e.preventDefault()
         setIsSubmitting(true)
 
-        // Simulate API call
-        toast.promise(new Promise((resolve) => setTimeout(() => resolve({ success: true }), 1500)), {
-            loading: 'جاري حفظ بيانات الطالب...',
-            success: () => {
+        const payload: CreateStudentRequest = {
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            parentPhone: formData.parentPhone,
+            notes: formData.notes,
+            courses: formData.enrolledCourses
+        }
+
+        try {
+            const result = await createStudentAction(payload)
+
+            if (result.success) {
+                toast.success('تم إضافة الطالب بنجاح')
                 router.push("/students")
-                return 'تم إضافة الطالب بنجاح'
-            },
-            error: 'حدث خطأ أثناء إضافة الطالب',
-            finally: () => setIsSubmitting(false)
-        })
+                router.refresh()
+            } else {
+                toast.error(result.error || 'حدث خطأ أثناء إضافة الطالب')
+            }
+        } catch (error: any) {
+            toast.error(error.message || 'حدث خطأ أثناء إضافة الطالب')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return {

@@ -23,6 +23,7 @@ interface FormSelectProps {
     icon?: LucideIcon
     className?: string
     dir?: "ltr" | "rtl"
+    disabled?: boolean
 }
 
 export function FormSelect({
@@ -33,13 +34,14 @@ export function FormSelect({
     options,
     icon: Icon,
     className,
-    dir = "rtl"
+    dir = "rtl",
+    disabled
 }: FormSelectProps) {
     return (
         <div className="space-y-2 text-right">
             <Label className="text-sm font-semibold text-foreground">{label}</Label>
             <div className="relative">
-                <Select dir={dir} value={value} onValueChange={onValueChange}>
+                <Select dir={dir} value={value} onValueChange={onValueChange} disabled={disabled}>
                     <SelectTrigger className={cn("h-11! w-full pl-4 pr-10", className)}>
                         <SelectValue placeholder={placeholder} />
                     </SelectTrigger>

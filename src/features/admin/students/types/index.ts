@@ -1,6 +1,3 @@
-// Deprecating manual UIStudent in favor of direct API type usage
-export type UIStudent = APIStudent;
-
 export interface APIStudent {
     id: string;
     name: string;
@@ -22,8 +19,6 @@ export interface StudentsPayload {
     }
 }
 
-// Full response for reference if needed elsewhere, but fetchAPI returns T (payload)
-// Full details response type
 export interface APIStudentDetails {
     id: string;
     name: string;
@@ -56,4 +51,13 @@ export interface APIStudentDetails {
 export interface APIStudentsResponse {
     success: boolean;
     data: StudentsPayload;
+}
+
+export interface CreateStudentRequest {
+    name: string;
+    phone: string;
+    email: string;
+    parentPhone: string;
+    notes: string;
+    courses: string[];
 }

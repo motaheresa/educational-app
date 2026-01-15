@@ -10,11 +10,12 @@ import { Badge } from "@/components/ui/badge"
 import { ErrorState } from "@/components/feedback/ErrorState"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { StatusBadge } from "@/components/atoms/StatusBadge"
+import { StudentsDeleteAction } from "@/features/admin/students/components/molecules/StudentsDeleteAction"
 
 export default async function StudentDetailsPage({ params }: { params: { id: string } }) {
     const { id } = await params
 
-    let student:APIStudentDetails|null = null
+    let student: APIStudentDetails | null = null
 
     try {
         const payload = await fetchAPI<APIStudentDetails>(`/api/students/${id}`)
@@ -63,12 +64,15 @@ export default async function StudentDetailsPage({ params }: { params: { id: str
                         </div>
                     </div>
                 </div>
-                <Link href={`/students/${id}/edit`}>
-                    <Button>
-                        <Edit className="ml-2 h-4 w-4" />
-                        تعديل البيانات
-                    </Button>
-                </Link>
+                <div className="flex items-center gap-3">
+                    <Link href={`/students/${id}/edit`}>
+                        <Button variant="outline">
+                            <Edit className="ml-2 h-4 w-4" />
+                            تعديل البيانات
+                        </Button>
+                    </Link>
+                    <StudentsDeleteAction studentId={id} />
+                </div>
             </div>
 
             <Separator />
