@@ -8,7 +8,7 @@ import { ConfirmModal } from "@/components/modals/ConfirmModal"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { deleteStudentAction } from "@/features/admin/students/actions" // Assuming a similar action for exams or using generic
+import { deleteExamAction } from "../../actions"
 
 interface ExamDetailsHeaderProps {
     id: string
@@ -24,13 +24,16 @@ export function ExamDetailsHeader({ id, title, courseTitle }: ExamDetailsHeaderP
     const handleDelete = async () => {
         setIsDeleting(true)
         try {
-            // Placeholder: Replace with actual deleteExamAction if it exists
-            // For now, simulating the delete logic
-            toast.success("تم حذف الامتحان بنجاح")
-            router.push("/exams")
-            router.refresh()
+            const result = await deleteExamAction(id)
+            if (result.success) {
+                toast.success("تم حذف الامتحان بنجاح")
+                router.push("/exams")
+                router.refresh()
+            } else {
+                toast.error(result.error || "حدث خطأ أثناء حذف الامتحان")
+            }
         } catch (error) {
-            toast.error("حدث خطأ أثناء حذف الامتحان")
+            toast.error("حدث خطأ غير متوقع")
         } finally {
             setIsDeleting(false)
             setShowDeleteModal(false)

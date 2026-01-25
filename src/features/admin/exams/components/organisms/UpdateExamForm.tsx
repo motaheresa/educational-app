@@ -1,24 +1,28 @@
 "use client"
 
-import { useState, useEffect, Suspense } from "react"
+import { useState, useEffect } from "react"
 import { Plus, BookOpen, Clock, GraduationCap, LayoutGrid } from "lucide-react"
 import { CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FormInput } from "@/components/molecules/FormInput"
-import { useCreateExam } from "../../hooks/useCreateExam"
+import { useUpdateExam } from "../../hooks/useUpdateExam"
 import { ExamFormHeader } from "./ExamFormHeader"
 import { QuestionForm } from "../molecules/QuestionForm"
 import { APICourse, Section } from "@/features/admin/courses/types"
+import { APIExam } from "../../types"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { fetchAPI } from "@/lib/api"
+import { toast } from "sonner"
 
-interface CreateExamFormProps {
+interface UpdateExamFormProps {
+    id: string
+    initialData: APIExam
     courses: APICourse[]
 }
 
-export function CreateExamForm({ courses }: CreateExamFormProps) {
+export function UpdateExamForm({ id, initialData, courses }: UpdateExamFormProps) {
     const {
         formData,
         isSubmitting,
@@ -32,7 +36,7 @@ export function CreateExamForm({ courses }: CreateExamFormProps) {
         removeOption,
         updateOption,
         handleSubmit
-    } = useCreateExam()
+    } = useUpdateExam(id, initialData)
 
     const [sections, setSections] = useState<Section[]>([])
     const [isLoadingSections, setIsLoadingSections] = useState(false)
@@ -47,14 +51,11 @@ export function CreateExamForm({ courses }: CreateExamFormProps) {
         const loadSections = async () => {
             setIsLoadingSections(true)
             try {
-                // Assuming we can get a course specify with sections or a dedicated endpoint
-                // From APICourse type, it has sections. If the list response has them, great. 
-                // If not, we fetch detailed course.
                 const res = await fetchAPI(`/api/courses/${formData.courseId}`) as { sections?: Section[] }
                 setSections(res.sections || [])
             } catch (error) {
                 console.error("Error fetching sections:", error)
-                import('sonner').then(({ toast }) => toast.error("فشل تحميل قائمة الأقسام"))
+                toast.error("فشل تحميل قائمة الأقسام")
             } finally {
                 setIsLoadingSections(false)
             }
@@ -66,9 +67,9 @@ export function CreateExamForm({ courses }: CreateExamFormProps) {
     return (
         <form onSubmit={handleSubmit} className="mx-auto max-w-7xl space-y-8" dir="rtl">
             <ExamFormHeader
-                title="إنشاء امتحان جديد"
+                title="تعديل الامتحان"
                 isSubmitting={isSubmitting}
-                onCancel="/exams"
+                onCancel={`/exams/${id}`}
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

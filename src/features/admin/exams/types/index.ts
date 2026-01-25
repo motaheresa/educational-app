@@ -42,3 +42,28 @@ export interface APIExamsResponse {
     success: boolean;
     data: APIExam[];
 }
+
+export interface CreateExamOption {
+    text: string;
+    isCorrect: boolean;
+}
+
+export interface CreateExamQuestion {
+    type: "MCQ" | "TRUE_FALSE";
+    header: {
+        text: string;
+    };
+    degree: number;
+    options: CreateExamOption[];
+}
+
+export interface CreateExamRequest {
+    title: string;
+    duration: number;
+    passDegree: number;
+    totalDegree: number;
+    courseId: string;
+    sectionId: string;
+    questionsCount: number;
+    questions: CreateExamQuestion[];
+}

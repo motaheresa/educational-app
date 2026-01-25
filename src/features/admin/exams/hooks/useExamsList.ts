@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { fetchAPI } from "@/lib/api"
+import { deleteExamAction } from "../actions"
 
 export function useExamsList() {
     const router = useRouter()
@@ -16,17 +17,18 @@ export function useExamsList() {
         setIsDeleting(true)
 
         try {
-            // Note: Assuming endpoint is /api/assignments/[id] for consistency
-            await fetchAPI(`/api/assignments/${deleteId}`, {
-                method: "DELETE"
-            })
+            const result = await deleteExamAction(deleteId)
 
-            toast.success("تم حذف الامتحان بنجاح")
-            setDeleteId(null)
-            router.refresh()
+            if (result.success) {
+                toast.success("تم حذف الامتحان بنجاح")
+                setDeleteId(null)
+                router.refresh()
+            } else {
+                toast.error(result.error || "حدث خطأ أثناء حذف الامتحان")
+            }
         } catch (error: any) {
             console.error("Failed to delete exam:", error)
-            toast.error("حدث خطأ أثناء حذف الامتحان")
+            toast.error("حدث خطأ غير متوقع")
         } finally {
             setIsDeleting(false)
         }
