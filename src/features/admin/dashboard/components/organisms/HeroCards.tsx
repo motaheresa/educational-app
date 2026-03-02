@@ -27,7 +27,7 @@ export const HeroCards = ({ totalStudents, newSubscriptions }: HeroCardsProps) =
                     <h2 className="text-2xl font-bold mb-4">تقدير نتائج درجات طلابك و واجباتهم</h2>
                     <div className="flex gap-3 mt-6">
                         <Button className="bg-pink-500 hover:bg-pink-600 text-white border-none shadow-md" asChild>
-                            <Link href="/homeworks">الواجبات</Link>
+                            <Link href="/courses">الكورسات</Link>
                         </Button>
                         <Button className="bg-orange-400 hover:bg-orange-500 text-white border-none shadow-md" asChild>
                             <Link href="/exams">الامتحانات</Link>

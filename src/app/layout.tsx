@@ -3,6 +3,11 @@ import { Tajawal } from "next/font/google";
 import localFont from "next/font/local";
 import "../styles/main.css";
 
+import { ThemeProvider } from "@/providers/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
+import { DirectionProvider } from "@/components/ui/direction";
+
+
 //TAJWAL
 export const tajawal = Tajawal({
   subsets: ["arabic"],
@@ -23,8 +28,7 @@ export const AvantGarde = localFont({
 });
 
 
-import { ThemeProvider } from "@/providers/theme-provider"
-import { Toaster } from "@/components/ui/sonner"
+
 
 export const metadata: Metadata = {
   title: "Teacher Panel",
@@ -43,11 +47,12 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
           disableTransitionOnChange
         >
-          {children}
+          <DirectionProvider direction="rtl">
+            {children}
+          </DirectionProvider>
           <Toaster />
         </ThemeProvider>
       </body>

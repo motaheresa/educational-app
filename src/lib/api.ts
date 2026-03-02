@@ -1,4 +1,5 @@
-export const BASE_URL = "https://lmsbackend-production-f24f.up.railway.app";
+export const BASE_URL = "https://lmsbackend-production-1b52.up.railway.app";
+
 
 interface ApiResponse<T> {
     success: boolean;

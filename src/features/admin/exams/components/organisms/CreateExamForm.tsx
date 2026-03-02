@@ -128,7 +128,7 @@ export function CreateExamForm({ courses }: CreateExamFormProps) {
                             <div className="space-y-2">
                                 <Label>الكورس المستهدف</Label>
                                 <Select value={formData.courseId} onValueChange={(val) => handleSelectChange("courseId", val)}>
-                                    <SelectTrigger>
+                                    <SelectTrigger className="w-full ">
                                         <SelectValue placeholder="اختر الكورس" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -149,7 +149,7 @@ export function CreateExamForm({ courses }: CreateExamFormProps) {
                                     onValueChange={(val) => handleSelectChange("sectionId", val)}
                                     disabled={!formData.courseId || isLoadingSections}
                                 >
-                                    <SelectTrigger>
+                                    <SelectTrigger  className="w-full ">
                                         <SelectValue placeholder={isLoadingSections ? "جاري التحميل..." : "اختر القسم"} />
                                     </SelectTrigger>
                                     <SelectContent>
