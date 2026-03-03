@@ -13,7 +13,8 @@ import {
     Settings,
     Plus,
     GraduationCap,
-    X
+    X,
+    Ticket
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -22,7 +23,7 @@ import { ModeToggle } from "@/components/molecules/mode-toggle"
 const navItems = [
     {
         title: "الرئيسية",
-        href: "/dashboard",
+        href: "/",
         icon: LayoutDashboard,
     },
     {
@@ -51,6 +52,11 @@ const navItems = [
         icon: CreditCard,
     },
     {
+        title: "الكوبونات",
+        href: "/coupons",
+        icon: Ticket,
+    },
+    {
         title: "الإعدادات",
         href: "/settings",
         icon: Settings,
@@ -77,7 +83,7 @@ export function Sidebar({ className, onClose }: { className?: string; onClose?: 
                 <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
                     <GraduationCap className="size-5" />
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-l from-primary to-purple-400 bg-clip-text text-transparent">
+                <span className="text-xl font-bold bg-linear-to-l from-primary to-purple-400 bg-clip-text text-transparent">
                     منصتي<span className="text-foreground">.برو</span>
                 </span>
             </div>

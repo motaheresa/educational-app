@@ -1,7 +1,4 @@
-🔌 may need update
-
-
-subscription page desing should be in dashboard
-subscription page should be like another pages show subscriptions and button for add subscription
-
-
+upper part like navbar 
+discount page
+subscriptions create
+videos uploading? 
