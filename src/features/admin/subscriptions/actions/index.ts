@@ -2,7 +2,21 @@
 
 import { fetchAPI } from "@/lib/api"
 import { revalidatePath } from "next/cache"
-import { UpdateSubscriptionRequest } from "../types"
+import { CreateSubscriptionRequest, UpdateSubscriptionRequest } from "../types"
+
+export async function createSubscriptionAction(data: CreateSubscriptionRequest) {
+    try {
+        await fetchAPI("/api/subscriptions", {
+            method: "POST",
+            body: JSON.stringify(data),
+        })
+        revalidatePath("/subscriptions")
+        return { success: true }
+    } catch (error: unknown) {
+        console.error("Create subscription error:", error)
+        return { success: false, error: error instanceof Error ? error.message : "An unknown error occurred" }
+    }
+}
 
 export async function deleteSubscriptionAction(id: string) {
     try {

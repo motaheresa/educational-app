@@ -14,7 +14,8 @@ import {
     Plus,
     GraduationCap,
     X,
-    Ticket
+    Ticket,
+    TicketPercent
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -55,6 +56,11 @@ const navItems = [
         title: "الكوبونات",
         href: "/coupons",
         icon: Ticket,
+    },
+    {
+        title: "الخصومات",
+        href: "/discounts",
+        icon: TicketPercent,
     },
     {
         title: "الإعدادات",

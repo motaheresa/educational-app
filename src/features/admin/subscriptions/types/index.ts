@@ -51,4 +51,10 @@ export interface UpdateSubscriptionRequest {
     status: string;
 }
 
+export interface CreateSubscriptionRequest {
+    studentId: string;
+    courseId: string;
+    paymentMethod: string;
+}
+
 export type UISubscription = APISubscription;
