@@ -1,5 +1,5 @@
 upper part like navbar 
-discount page
-subscriptions create
+discount page ✅
+subscriptions create ✅
 videos uploading? 
-active tab has problem in sidebar
+active tab has problem in sidebar ✅

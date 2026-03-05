@@ -42,9 +42,31 @@ export async function createDiscountAction(data: any) {
 
 export async function updateDiscountAction(id: string, data: any) {
     try {
+        const payload = { ...data }
+
+        // Ensure dates are full ISO strings
+        if (payload.startDate) {
+            payload.startDate = new Date(payload.startDate).toISOString()
+        }
+        if (payload.endDate) {
+            // Set end date to end of the day to cover the whole date selected
+            const endDate = new Date(payload.endDate)
+            endDate.setUTCHours(23, 59, 59, 999)
+            payload.endDate = endDate.toISOString()
+        }
+
+        // Ensure payload matches strict API requirements for ALL vs COURSES
+        if (payload.appliesTo === "ALL") {
+            delete payload.courseIds
+            // delete payload.maxStudents
+        } else if (payload.appliesTo === "COURSE") {
+            payload.appliesTo = "COURSES"
+        }
+        payload.maxStudents = payload.maxStudents ? Number(payload.maxStudents) : null
+
         await fetchAPI(`/api/discounts/${id}`, {
             method: "PUT",
-            body: JSON.stringify(data),
+            body: JSON.stringify(payload),
         })
         revalidatePath("/discounts")
         revalidatePath(`/discounts/${id}`)

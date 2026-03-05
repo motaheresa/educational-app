@@ -12,7 +12,12 @@ export default async function DiscountsPage() {
         const responseData = await fetchAPI<APIDiscount[]>("/api/discounts");
 
         if (Array.isArray(responseData)) {
-            discounts = responseData;
+            discounts = responseData.sort((a, b) => {
+                if (a.isActive === b.isActive) {
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+                }
+                return a.isActive ? -1 : 1;
+            });
         }
 
     } catch (error) {

@@ -13,7 +13,7 @@ export default async function DashboardPage() {
 
     try {
         dashboardData = await fetchAPI<DashboardAPIResponse>("/api/dashboard");
-        console.log("dashboardData=",dashboardData)
+        console.log("dashboardData=", dashboardData)
     } catch (error) {
         console.error("Failed to fetch dashboard data:", error);
         return (
@@ -34,7 +34,7 @@ export default async function DashboardPage() {
         totalRevenue: 0
     };
 
-    console.log("dashboardData?.subscriptionsDistribution",dashboardData)
+    console.log("dashboardData?.subscriptionsDistribution", dashboardData)
     return (
         <Suspense fallback={<LoadingState message="جاري تحميل لوحة التحكم..." />}>
             <div className="p-6 space-y-6 animate-in fade-in duration-500">
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
                     {/* Subscription Distribution */}
                     <SubscriptionDistribution data={dashboardData?.data?.subscriptionsDistribution || []} />
 
-                    
+
                 </div>
             </div>
         </Suspense>
