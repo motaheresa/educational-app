@@ -11,7 +11,7 @@ export const SubscriptionDistribution = ({ data }: SubscriptionDistributionProps
     const colors = ['#fb923c', '#60a5fa', '#c084fc', '#34d399', '#f59e0b', '#ec4899'];
 
 
-    console.log("data=", data)
+
     return (
         <Card className="border-none shadow-md h-fit">
             <CardHeader className="flex flex-row items-center justify-between pb-4">

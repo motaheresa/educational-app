@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Bell, Menu, LogOut, Settings, User, ChevronDown } from "lucide-react"
+import { Bell, Menu, LogOut, Settings, User, ChevronDown, CreditCard, FileText, Users, BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { ModeToggle } from "@/components/molecules/mode-toggle"
@@ -16,7 +16,7 @@ const teacherInfo = {
     subject: "الرياضيات",
 }
 
-// Mock notifications
+// Mock notifications with type icons
 const mockNotifications = [
     {
         id: "1",
@@ -24,7 +24,9 @@ const mockNotifications = [
         message: "قام الطالب يوسف محمد بالاشتراك في كورس الجبر",
         time: "منذ 5 دقائق",
         isRead: false,
-        type: "subscription" as const,
+        icon: CreditCard,
+        iconColor: "text-emerald-500",
+        iconBg: "bg-emerald-500/10",
     },
     {
         id: "2",
@@ -32,7 +34,9 @@ const mockNotifications = [
         message: "أكمل 15 طالب امتحان الفصل الأول",
         time: "منذ 30 دقيقة",
         isRead: false,
-        type: "exam" as const,
+        icon: FileText,
+        iconColor: "text-blue-500",
+        iconBg: "bg-blue-500/10",
     },
     {
         id: "3",
@@ -40,7 +44,9 @@ const mockNotifications = [
         message: "تم استخدام كوبون WINTER2026 بواسطة 3 طلاب",
         time: "منذ ساعة",
         isRead: true,
-        type: "coupon" as const,
+        icon: BookOpen,
+        iconColor: "text-orange-500",
+        iconBg: "bg-orange-500/10",
     },
     {
         id: "4",
@@ -48,7 +54,9 @@ const mockNotifications = [
         message: "تم تسجيل الطالبة مريم أحمد في المنصة",
         time: "منذ ساعتين",
         isRead: true,
-        type: "student" as const,
+        icon: Users,
+        iconColor: "text-purple-500",
+        iconBg: "bg-purple-500/10",
     },
     {
         id: "5",
@@ -56,7 +64,9 @@ const mockNotifications = [
         message: "قام 8 طلاب بتسليم واجب المعادلات التفاضلية",
         time: "منذ 3 ساعات",
         isRead: true,
-        type: "homework" as const,
+        icon: FileText,
+        iconColor: "text-pink-500",
+        iconBg: "bg-pink-500/10",
     },
 ]
 
@@ -74,9 +84,7 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
 }
 
 function getPageInfo(pathname: string) {
-    // Exact match first
     if (pageTitles[pathname]) return pageTitles[pathname]
-    // Then startsWith for nested routes
     const match = Object.keys(pageTitles).find(key => key !== "/" && pathname.startsWith(key))
     return match ? pageTitles[match] : pageTitles["/"]
 }
@@ -106,16 +114,19 @@ export function Navbar({ className, onMenuClick }: { className?: string; onMenuC
     }, [])
 
     return (
-        <header className={cn("h-16 flex items-center justify-between px-4 md:px-6 bg-card border-b", className)} dir="rtl">
+        <header className={cn(
+            "h-16 flex items-center justify-between px-4 md:px-6 bg-card/80 backdrop-blur-md border-b border-border/50",
+            className
+        )} dir="rtl">
             {/* Right (RTL): Menu Toggle (Mobile) + Page Title */}
             <div className="flex items-center gap-3">
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="md:hidden"
+                    className="md:hidden shrink-0"
                     onClick={onMenuClick}
                 >
-                    <Menu className="size-6" />
+                    <Menu className="size-5" />
                 </Button>
 
                 <div className="flex flex-col">
@@ -124,24 +135,27 @@ export function Navbar({ className, onMenuClick }: { className?: string; onMenuC
                 </div>
             </div>
 
-            {/* Left Side: Notifications, Dark Mode, Profile */}
-            <div className="flex items-center gap-1.5 md:gap-3">
+            {/* Left Side: Icons Row — organized with separators */}
+            <div className="flex items-center gap-1 md:gap-1.5">
                 {/* Dark Mode */}
-                <div className="hidden sm:block">
+                <div className="hidden sm:flex items-center">
                     <ModeToggle />
                 </div>
+
+                {/* Separator */}
+                <div className="hidden sm:block w-px h-6 bg-border/50 mx-1" />
 
                 {/* Notifications */}
                 <div className="relative" ref={notifRef}>
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="relative rounded-full size-9 md:size-10"
+                        className="relative rounded-full size-9"
                         onClick={() => { setShowNotifications(!showNotifications); setShowProfile(false) }}
                     >
-                        <Bell className="size-[18px] md:size-5" />
+                        <Bell className="size-[18px]" />
                         {unreadCount > 0 && (
-                            <span className="absolute -top-0.5 -right-0.5 size-4 md:size-[18px] bg-red-500 text-white rounded-full text-[9px] md:text-[10px] font-black flex items-center justify-center ring-2 ring-card animate-pulse">
+                            <span className="absolute -top-0.5 -left-0.5 size-[18px] bg-red-500 text-white rounded-full text-[9px] font-black flex items-center justify-center ring-2 ring-card">
                                 {unreadCount}
                             </span>
                         )}
@@ -149,39 +163,44 @@ export function Navbar({ className, onMenuClick }: { className?: string; onMenuC
 
                     {/* Notifications Dropdown */}
                     {showNotifications && (
-                        <div className="absolute left-0 top-full mt-2 w-80 md:w-96 bg-card border rounded-2xl shadow-2xl shadow-black/10 z-50 overflow-hidden" dir="rtl">
+                        <div className="absolute left-0 md:left-auto md:right-0 top-full mt-2 w-[calc(100vw-2rem)] md:w-96 bg-card border rounded-2xl shadow-2xl shadow-black/10 z-50 overflow-hidden" dir="rtl">
                             <div className="p-4 border-b bg-muted/30">
                                 <div className="flex items-center justify-between">
                                     <h3 className="font-black text-sm">الإشعارات</h3>
                                     {unreadCount > 0 && (
-                                        <span className="text-[10px] font-bold bg-red-500/10 text-red-500 px-2 py-0.5 rounded-full">
+                                        <span className="text-[10px] font-bold bg-red-500/10 text-red-500 px-2.5 py-1 rounded-full">
                                             {unreadCount} جديد
                                         </span>
                                     )}
                                 </div>
                             </div>
                             <div className="max-h-[360px] overflow-y-auto divide-y">
-                                {mockNotifications.map((notif) => (
-                                    <div
-                                        key={notif.id}
-                                        className={cn(
-                                            "p-3.5 hover:bg-muted/30 transition-colors cursor-pointer",
-                                            !notif.isRead && "bg-primary/3"
-                                        )}
-                                    >
-                                        <div className="flex items-start gap-3">
-                                            <div className={cn(
-                                                "size-2 rounded-full mt-1.5 shrink-0 transition-all",
-                                                !notif.isRead ? "bg-primary" : "bg-transparent"
-                                            )} />
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-bold text-foreground">{notif.title}</p>
-                                                <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{notif.message}</p>
-                                                <p className="text-[10px] text-muted-foreground/60 mt-1.5 font-medium">{notif.time}</p>
+                                {mockNotifications.map((notif) => {
+                                    const NotifIcon = notif.icon
+                                    return (
+                                        <div
+                                            key={notif.id}
+                                            className={cn(
+                                                "p-3.5 hover:bg-muted/30 transition-colors cursor-pointer",
+                                                !notif.isRead && "bg-primary/5"
+                                            )}
+                                        >
+                                            <div className="flex items-start gap-3">
+                                                <div className={cn("size-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5", notif.iconBg)}>
+                                                    <NotifIcon className={cn("size-4", notif.iconColor)} />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="flex items-center gap-2">
+                                                        <p className="text-sm font-bold text-foreground">{notif.title}</p>
+                                                        {!notif.isRead && <div className="size-1.5 rounded-full bg-primary shrink-0" />}
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{notif.message}</p>
+                                                    <p className="text-[10px] text-muted-foreground/60 mt-1 font-medium">{notif.time}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    )
+                                })}
                             </div>
                             <div className="p-3 border-t bg-muted/20 text-center">
                                 <button className="text-xs font-bold text-primary hover:text-primary/80 transition-colors">
@@ -192,31 +211,34 @@ export function Navbar({ className, onMenuClick }: { className?: string; onMenuC
                     )}
                 </div>
 
+                {/* Separator */}
+                <div className="w-px h-6 bg-border/50 mx-0.5 md:mx-1" />
+
                 {/* Profile Dropdown */}
                 <div className="relative" ref={profileRef}>
                     <button
-                        className="flex items-center gap-2 md:gap-2.5 py-1.5 px-1.5 md:px-3 rounded-xl hover:bg-muted/50 transition-all"
+                        className="flex items-center gap-2 py-1.5 px-1.5 md:px-2.5 rounded-xl hover:bg-muted/50 transition-all"
                         onClick={() => { setShowProfile(!showProfile); setShowNotifications(false) }}
                     >
-                        <div className="size-8 md:size-9 rounded-full overflow-hidden ring-2 ring-primary/20 bg-muted">
+                        <div className="size-8 rounded-full overflow-hidden ring-2 ring-primary/20 bg-muted shrink-0">
                             <img
                                 src={teacherInfo.avatar}
                                 alt={teacherInfo.name}
                                 className="size-full object-cover"
                             />
                         </div>
-                        <div className="hidden lg:flex flex-col items-start" dir="rtl">
-                            <p className="text-sm font-bold leading-tight">{teacherInfo.name}</p>
+                        <div className="hidden lg:flex flex-col items-start">
+                            <p className="text-xs font-bold leading-tight">{teacherInfo.name}</p>
                             <p className="text-[10px] text-muted-foreground font-medium">{teacherInfo.role}</p>
                         </div>
                         <ChevronDown className={cn(
-                            "hidden lg:block size-3.5 text-muted-foreground transition-transform",
+                            "hidden lg:block size-3 text-muted-foreground transition-transform",
                             showProfile && "rotate-180"
                         )} />
                     </button>
 
                     {showProfile && (
-                        <div className="absolute left-0 top-full mt-2 w-56 bg-card border rounded-2xl shadow-2xl shadow-black/10 z-50 overflow-hidden" dir="rtl">
+                        <div className="absolute left-0 md:left-auto md:right-0 top-full mt-2 w-56 bg-card border rounded-2xl shadow-2xl shadow-black/10 z-50 overflow-hidden" dir="rtl">
                             <div className="p-4 border-b bg-muted/20">
                                 <div className="flex items-center gap-3">
                                     <div className="size-10 rounded-full overflow-hidden ring-2 ring-primary/20">
